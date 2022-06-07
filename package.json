@@ -2,15 +2,27 @@
   "name": "final-project-workorders-api",
   "version": "0.0.0",
   "private": true,
+  "main": "src/index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./src/server.js",
+    "db:reset": "node ./bin/resetdb.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "axios": "^0.27.2",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "helmet": "^3.18.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.0",
+    "socket.io": "^2.2.0",
+    "ws": "^7.0.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "helmet": "^5.1.0",
+    "pg": "^8.7.3"
   }
 }
