@@ -9,7 +9,8 @@ CREATE TABLE modules (
   id SERIAL PRIMARY KEY NOT NULL,
   week INTEGER NOT NULL,
   day INTEGER NOT NULL,
-  topic VARCHAR(255) NOT NULL
+  topic VARCHAR(255) NOT NULL,
+  archive BOOLEAN DEFAULT false
 );
 
 CREATE TABLE categories (
