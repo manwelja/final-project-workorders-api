@@ -15,7 +15,8 @@ CREATE TABLE modules (
 
 CREATE TABLE categories (
   id SERIAL PRIMARY KEY NOT NULL,
-  description VARCHAR(128) NOT NULL
+  description VARCHAR(128) NOT NULL,
+  archive BOOLEAN DEFAULT false
 );
 
 CREATE TABLE statuses (

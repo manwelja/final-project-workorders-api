@@ -14,12 +14,14 @@ module.exports = db => {
   });
 
   router.put("/", (request, response) => {
-    // console.log("request body", request.body.name)
-    // db.query(
-    //   `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`, [request.body.name, request.body.email, request.body.password]
-    // ).then(({ rows: res }) => {
-    //   response.json(res);
-    // });
+    const fields = Object.keys(request.body).join(", ");
+    const values = Object.values(request.body);
+    const ref = values.map((_, idx) => "$" + (idx + 1)).join(", ");
+    db.query(
+       `INSERT INTO users (${fields}) VALUES (${ref})`, values
+     ).then(({ rows: res }) => {
+       response.json(res);
+     });
   });
   return router;
 };
