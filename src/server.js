@@ -44,8 +44,6 @@ app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/workorders", workordersRoutes(db));
 app.use("/api", indexRoutes(db));
 
-
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

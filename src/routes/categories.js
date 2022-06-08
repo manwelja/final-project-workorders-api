@@ -27,10 +27,10 @@ module.exports = db => {
     const values = Object.values(request.body);
     const ref = values.map((_, idx) => "$" + (idx + 1)).join(", ");
     db.query(
-       `INSERT INTO categories (${fields}) VALUES (${ref})`, values
-     ).then(({ rows: res }) => {
-       response.json(res);
-     });
+      `INSERT INTO categories (${fields}) VALUES (${ref})`, values
+    ).then(({ rows: res }) => {
+      response.json(res);
+    });
   });
   return router;
 };

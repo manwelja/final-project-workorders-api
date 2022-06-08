@@ -11,6 +11,5 @@ module.exports = (db) => {
       response.json(res);
     }).catch((err) => console.log(err));
   });
-
   return router;
 };

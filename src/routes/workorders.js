@@ -9,7 +9,7 @@ module.exports = db => {
     `
     ).then(({ rows: res }) => {
       response.json(res);
-    });
+    }).catch((err) => console.log(err));
   });
 
   router.put("/", (request, response) => {
@@ -17,10 +17,10 @@ module.exports = db => {
     const values = Object.values(request.body);
     const ref = values.map((_, idx) => "$" + (idx + 1)).join(", ");
     db.query(
-       `INSERT INTO workorders (${fields}) VALUES (${ref})`, values
-     ).then(({ rows: res }) => {
-       response.json(res);
-     }).catch((err) => console.log(err));
+      `INSERT INTO workorders (${fields}) VALUES (${ref})`, values
+    ).then(({ rows: res }) => {
+      response.json(res);
+    }).catch((err) => console.log(err));
   });
   return router;
 };
