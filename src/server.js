@@ -33,9 +33,11 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const indexRoutes = require("./routes/index");
+const modulesRoutes = require("./routes/modules");
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(db));
+app.use("/api/modules", modulesRoutes(db));
 app.use("/api", indexRoutes(db));
 
 
