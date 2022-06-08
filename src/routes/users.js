@@ -3,7 +3,6 @@ const router = express.Router();
 
 module.exports = db => {
   router.get("/", (request, response) => {
-    console.log("users");
     db.query(
       `
       SELECT * FROM users
@@ -21,7 +20,7 @@ module.exports = db => {
        `INSERT INTO users (${fields}) VALUES (${ref})`, values
      ).then(({ rows: res }) => {
        response.json(res);
-     });
+     }).catch((err) => console.log(err));
   });
   return router;
 };

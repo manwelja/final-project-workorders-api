@@ -9,7 +9,7 @@ module.exports = (db) => {
     `
     ).then(({ rows: res }) => {
       response.json(res);
-    });
+    }).catch((err) => console.log(err));
   });
 
   return router;

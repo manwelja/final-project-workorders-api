@@ -19,7 +19,7 @@ module.exports = db => {
     `, [request.params.archive]
     ).then(({ rows: res }) => {
       response.json(res);
-    });
+    }).catch((err) => console.log(err));
   });
 
   router.put("/", (request, response) => {
