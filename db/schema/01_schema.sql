@@ -54,6 +54,9 @@ CREATE TABLE workorders (
   escalate BOOLEAN NOT NULL DEFAULT false,
   mentor_notes VARCHAR(255),
   student_notes VARCHAR(255),
-  resolution_minutes INTEGER,
-  date_created DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
+  mentor_rating INTEGER,
+  student_rating INTEGER,
+  date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  date_pickup TIMESTAMP,
+  date_closed TIMESTAMP
 );
