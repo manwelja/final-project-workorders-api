@@ -37,6 +37,7 @@ const indexRoutes = require("./routes/index");
 const modulesRoutes = require("./routes/modules");
 const categoriesRoutes = require("./routes/categories");
 const workOrdersRoutes = require("./routes/workorders");
+const queueRoutes = require("./routes/queue");
 const meetingLinksRoutes = require("./routes/meetinglinks");
 
 // Mount all resource routes
@@ -45,6 +46,7 @@ app.use("/api/usersbyrole", usersByRoleRoutes(db));
 app.use("/api/modules", modulesRoutes(db));
 app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/workorders", workOrdersRoutes(db));
+app.use("/api/queue", queueRoutes(db));
 app.use("/api/meetinglinks", meetingLinksRoutes(db));
 app.use("/api", indexRoutes(db));
 
