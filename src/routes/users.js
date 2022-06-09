@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = db => {
+module.exports = (db, addUser) => {
   router.get("/", (request, response) => {
     db.query(
       `SELECT * FROM users`
@@ -32,7 +32,10 @@ module.exports = db => {
     db.query(
       `INSERT INTO users (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
-      response.json(res);
+      setTimeout(() => {
+        response.status(204).json({});
+        addUser(request.body);
+      }, 1000);
     }).catch((err) => {
       console.log(err);
       response.json([]);

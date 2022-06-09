@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS meeting_links CASCADE;
 DROP TABLE IF EXISTS cohorts CASCADE;
 DROP TABLE IF EXISTS statuses CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
@@ -51,6 +52,9 @@ CREATE TABLE workorders (
   category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
   module_id INTEGER REFERENCES modules(id) ON DELETE CASCADE,
   environment VARCHAR(255),
+  description VARCHAR(255) NOT NULL,
+  screenshot VARCHAR(255),
+  link_to_module VARCHAR(255),
   escalate BOOLEAN NOT NULL DEFAULT false,
   mentor_notes VARCHAR(255),
   student_notes VARCHAR(255),
@@ -59,4 +63,10 @@ CREATE TABLE workorders (
   date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   date_pickup TIMESTAMP,
   date_closed TIMESTAMP
+);
+
+CREATE TABLE meeting_links (
+  id SERIAL PRIMARY KEY NOT NULL,
+  workorder_id INTEGER REFERENCES workorders(id) ON DELETE CASCADE,
+  meeting_link VARCHAR(255)
 );
