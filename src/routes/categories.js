@@ -4,22 +4,24 @@ const router = express.Router();
 module.exports = db => {
   router.get("/", (request, response) => {
     db.query(
-      `
-      SELECT * FROM categories
-    `
+      `SELECT * FROM categories`
     ).then(({ rows: res }) => {
       response.json(res);
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
     });
   });
 
   router.get("/:archive", (request, response) => {
     db.query(
-      `
-      SELECT * FROM cetegories WHERE archive = $1
-    `, [request.params.archive]
+      `SELECT * FROM categories WHERE archive = $1`, [request.params.archive]
     ).then(({ rows: res }) => {
       response.json(res);
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
+    });
   });
 
   router.put("/", (request, response) => {
@@ -30,6 +32,9 @@ module.exports = db => {
       `INSERT INTO categories (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
       response.json(res);
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
     });
   });
   return router;

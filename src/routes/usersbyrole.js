@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (db) => {
-  router.get("/", (request, response) => {
+module.exports = db => {
+  //Return list of all users by role
+  router.get("/:role", (request, response) => {
     db.query(
-      `SELECT * FROM workorders`
+      `SELECT * FROM users where role = $1`, [request.params.role]
     ).then(({ rows: res }) => {
       response.json(res);
     }).catch((err) => {
@@ -12,5 +13,6 @@ module.exports = (db) => {
       response.json([]);
     });
   });
+
   return router;
 };

@@ -4,12 +4,25 @@ const router = express.Router();
 module.exports = db => {
   router.get("/", (request, response) => {
     db.query(
-      `
-      SELECT * FROM users
-    `
+      `SELECT * FROM users`
     ).then(({ rows: res }) => {
       response.json(res);
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
+    });
+  });
+
+  //Return user with a specified id
+  router.get("/:id", (request, response) => {
+    db.query(
+      `SELECT * FROM users WHERE id = $1`, [request.params.id]
+    ).then(({ rows: res }) => {
+      response.json(res);
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
+    });
   });
 
   router.put("/", (request, response) => {
@@ -20,7 +33,10 @@ module.exports = db => {
       `INSERT INTO users (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
       response.json(res);
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
+    });
   });
   
   return router;
