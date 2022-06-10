@@ -32,10 +32,7 @@ module.exports = (db, addUser) => {
     db.query(
       `INSERT INTO users (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
-      setTimeout(() => {
-        response.status(204).json({});
-        addUser(request.body);
-      }, 1000);
+      response.json(res);
     }).catch((err) => {
       console.log(err);
       response.json([]);
