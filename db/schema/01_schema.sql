@@ -53,7 +53,7 @@ CREATE TABLE workorders (
   module_id INTEGER REFERENCES modules(id) ON DELETE CASCADE,
   environment VARCHAR(255),
   description VARCHAR(255) NOT NULL,
-  screenshot BYTEA,
+  screenshot_url VARCHAR(255),
   link_to_module VARCHAR(255),
   escalate BOOLEAN NOT NULL DEFAULT false,
   mentor_notes VARCHAR(255),
