@@ -39,6 +39,9 @@ const categoriesRoutes = require("./routes/categories");
 const workOrdersRoutes = require("./routes/workorders");
 const queueRoutes = require("./routes/queue");
 const meetingLinksRoutes = require("./routes/meetinglinks");
+const loginRoutes = require("./routes/login");
+// const registerRoutes = require("./routes/register");
+const updateworkorderRoutes = require("./routes/updateworkorder");
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(db));
@@ -49,6 +52,10 @@ app.use("/api/workorders", workOrdersRoutes(db));
 app.use("/api/queue", queueRoutes(db));
 app.use("/api/meetinglinks", meetingLinksRoutes(db));
 app.use("/api", indexRoutes(db));
+app.use("/api/login", loginRoutes(db));
+app.use("/api/update/workorder", updateworkorderRoutes(db));
+// app.use("api/register", registerRoutes(db));
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
