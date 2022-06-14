@@ -7,10 +7,10 @@ module.exports = db => {
       `
       SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic
       FROM workorders 
-      JOIN users user_info ON (user_info.id = user_student_id)     
-      JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
-      JOIN categories ON (categories.id = category_id)
-      JOIN modules ON (modules.id = module_id)
+      LEFT JOIN users user_info ON (user_info.id = user_student_id)     
+      LEFT JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
+      LEFT JOIN categories ON (categories.id = category_id)
+      LEFT JOIN modules ON (modules.id = module_id)
       WHERE status_id = $1
       
       `, [request.params.status]
