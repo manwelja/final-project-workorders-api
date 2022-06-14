@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = db => {
+module.exports = (db, updateWorkorder) => {
   router.get("/", (request, response) => {
     db.query(
       `SELECT * FROM workorders`
@@ -51,7 +51,12 @@ module.exports = db => {
     db.query(
       `INSERT INTO workorders (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
-      response.json(res);
+      setTimeout(() => {
+        //call function to send updated workorder data to all connected clients, via websockets
+        response.status(204).json({});
+        updateWorkorder(request.body);
+      }, 1000);
+      //response.json(res);
     }).catch((err) => {
       console.log(err);
       response.json([]);
