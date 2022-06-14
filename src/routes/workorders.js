@@ -4,7 +4,14 @@ const router = express.Router();
 module.exports = (db, updateWorkorder) => {
   router.get("/", (request, response) => {
     db.query(
-      `SELECT * FROM workorders`
+      `      
+        SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic
+        FROM workorders 
+        JOIN users user_info ON (user_info.id = user_student_id)     
+        JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
+        JOIN categories ON (categories.id = category_id)
+        JOIN modules ON (modules.id = module_id)
+      `
     ).then(({ rows: res }) => {
       response.json(res);
     }).catch((err) => {
@@ -17,7 +24,15 @@ module.exports = (db, updateWorkorder) => {
   //Get a workorders by its unique ID
   router.get("/:id", (request, response) => {
     db.query(
-      `SELECT * FROM workorders WHERE id = $1`, [request.params.id]
+      `      
+        SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic
+        FROM workorders 
+        JOIN users user_info ON (user_info.id = user_student_id)     
+        JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
+        JOIN categories ON (categories.id = category_id)
+        JOIN modules ON (modules.id = module_id)
+        WHERE workorders.id = $1
+      `, [request.params.id]
     ).then(({ rows: res }) => {
       response.json(res);
     }).catch((err) => {
@@ -30,9 +45,23 @@ module.exports = (db, updateWorkorder) => {
   router.get("/:role/:id", (request, response) => {
     let dbQuery = "";
     if (request.params.role === "mentor") {
-      dbQuery = `SELECT * FROM workorders WHERE user_mentor_id = $1`;
+      dbQuery = `     
+        SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic
+        FROM workorders 
+        JOIN users user_info ON (user_info.id = user_student_id)     
+        JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
+        JOIN categories ON (categories.id = category_id)
+        JOIN modules ON (modules.id = module_id)      
+        user_mentor_id = $1`;
     } else if (request.params.role === "student") {
-      dbQuery = `SELECT * FROM workorders WHERE user_student_id = $1`;
+      dbQuery = ` 
+        SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic
+        FROM workorders 
+        JOIN users user_info ON (user_info.id = user_student_id)     
+        JOIN users mentor_info ON (mentor_info.id = user_mentor_id)   
+        JOIN categories ON (categories.id = category_id)
+        JOIN modules ON (modules.id = module_id)
+        user_student_id = $1`;
     }
     db.query(
       dbQuery, [request.params.id]
