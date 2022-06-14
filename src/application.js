@@ -27,7 +27,7 @@ const updateworkorderRoutes = require("./routes/updateworkorder");
 
 module.exports = function application(
   ENV,
-  actions = { addWorkorder: () => {} }
+  actions = { updateWorkorder: () => {} }
 ) {
   app.use(cors());
   app.use(helmet());
@@ -38,7 +38,7 @@ module.exports = function application(
   app.use("/api/usersbyrole", usersByRoleRoutes(db));
   app.use("/api/modules", modulesRoutes(db));
   app.use("/api/categories", categoriesRoutes(db));
-  app.use("/api/workorders", workOrdersRoutes(db, actions.addWorkorder));
+  app.use("/api/workorders", workOrdersRoutes(db, actions.updateWorkorder));
   app.use("/api/queue", queueRoutes(db));
   app.use("/api/meetinglinks", meetingLinksRoutes(db));
   app.use("/api", indexRoutes(db));
