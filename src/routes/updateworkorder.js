@@ -2,22 +2,23 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = db => {
-  router.put("/:fieldname/:id", (request, response) => {
-    console.log('id:', request.params.id);
-    console.log('fieldname', request.body.fieldname);
-    console.log('value', request.body.value);
-    let dbquery = '';
-    if (request.params.fieldname === "student_notes") {
-      dbquery = `UPDATE workorders SET student_notes = $1 WHERE id = $2`;
-    }
-    else if (request.params.fieldname === "mentor_notes") {
-      dbquery = `UPDATE workorders SET mentor_notes = $1 WHERE id = $2`;
-    } else {
+
+  router.patch("/:id", (request, response) => {
+    console.log(request.body);
+
+    const columnName = request.body.fname;
+    const fieldNames = ["student_notes", "mentor_notes"];
+
+    //check if fieldname is "safe" before passing to query string
+    if (!fieldNames.includes(columnName)) {
       response.json([]);
       return router;
     }
+
+    const query = `UPDATE workorders SET ${columnName} = $1, mentor_rating = $2 WHERE id = $3`;
+
     db.query(
-      dbquery, [request.body.value, parseInt(request.params.id)]
+      query, [request.body.description, parseInt(request.body.rating), parseInt(request.params.id)]
     ).then(({ rows: res }) => {
       response.json(res);
     }).catch((err) => {
