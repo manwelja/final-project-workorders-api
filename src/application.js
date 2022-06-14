@@ -1,34 +1,15 @@
-// load .env data into process.env
-require("dotenv").config();
-
-// Web server config
-const PORT = process.env.PORT || 8001;
 const express = require("express");
+const bodyparser = require("body-parser");
+const helmet = require("helmet");
+const cors = require("cors");
+
 const app = express();
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db");
 const db = new Pool(dbParams);
 db.connect();
-
-//Needed for CORS (server and client running on same machine)
-const cors = require('cors');
-app.use(cors());
-
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan("dev"));
-app.use(cookieParser());
-
-app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -43,26 +24,32 @@ const loginRoutes = require("./routes/login");
 // const registerRoutes = require("./routes/register");
 const updateworkorderRoutes = require("./routes/updateworkorder");
 
+
 module.exports = function application(
-  actions = { updateWorkorder: () => {} }
+  ENV,
+  actions = { addWorkorder: () => {} }
 ) {
+  app.use(cors());
+  app.use(helmet());
+  app.use(bodyparser.json());
+
   // Mount all resource routes
   app.use("/api/users", usersRoutes(db));
   app.use("/api/usersbyrole", usersByRoleRoutes(db));
   app.use("/api/modules", modulesRoutes(db));
   app.use("/api/categories", categoriesRoutes(db));
-  app.use("/api/workorders", workOrdersRoutes(db, actions.updateWorkorder));
+  app.use("/api/workorders", workOrdersRoutes(db, actions.addWorkorder));
   app.use("/api/queue", queueRoutes(db));
   app.use("/api/meetinglinks", meetingLinksRoutes(db));
   app.use("/api", indexRoutes(db));
   app.use("/api/login", loginRoutes(db));
-  app.use("/api/update/workorder", updateworkorderRoutes(db, actions.updateWorkorder));
+  app.use("/api/update/workorder", updateworkorderRoutes(db));
   // app.use("api/register", registerRoutes(db));
 
 
-  app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`);
-  });
+  app.close = function() {
+    return db.end();
+  };
+
   return app;
 };
-

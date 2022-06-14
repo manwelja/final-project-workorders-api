@@ -3,7 +3,6 @@ const router = express.Router();
 
 module.exports = db => {
   router.get("/", (request, response) => {
-    console.log("users");
     db.query(
       `SELECT * FROM modules`
     ).then(({ rows: res }) => {

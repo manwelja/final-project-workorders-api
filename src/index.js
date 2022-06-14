@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("../environment");
 
-const app = require("./application")(ENV, { updateWorkorder });
+const app = require("./application")({ ENV, updateWorkorder });
 const server = require("http").Server(app);
 
 //Define a new web socket server
