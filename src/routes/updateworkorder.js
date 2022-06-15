@@ -2,22 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = db => {
-  router.put("/:fieldname/:id", (request, response) => {
-    console.log('id:', request.params.id);
-    console.log('fieldname', request.body.fieldname);
-    console.log('value', request.body.value);
-    let dbquery = '';
-    if (request.params.fieldname === "student_notes") {
-      dbquery = `UPDATE workorders SET student_notes = $1 WHERE id = $2`;
-    }
-    else if (request.params.fieldname === "mentor_notes") {
-      dbquery = `UPDATE workorders SET mentor_notes = $1 WHERE id = $2`;
+  router.patch("/:fname/:id", (request, response) => {
+    let query = "";
+
+    if (request.params.fname === "studentfeedback") {
+      query = `UPDATE workorders SET student_notes = $1, mentor_rating = $2 WHERE id = $3`;
+    } else if (request.params.fname === "mentorfeedback") {
+      query = `UPDATE workorders SET mentor_notes = $1, student_rating = $2 WHERE id = $3`;
     } else {
       response.json([]);
       return router;
     }
+
     db.query(
-      dbquery, [request.body.value, parseInt(request.params.id)]
+      query, [request.body.description, parseInt(request.body.rating), parseInt(request.params.id)]
     ).then(({ rows: res }) => {
       response.json(res);
     }).catch((err) => {
