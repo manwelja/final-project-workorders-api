@@ -23,5 +23,19 @@ module.exports = db => {
       response.json([]);
     });
   });
+
+  router.get("/:id", (request, response) => {
+    let query = "";
+    return response.json(["you git it"]);
+    // db.query(
+    //   query, [request.body.description, parseInt(request.body.rating), parseInt(request.params.id)]
+    // ).then(({ rows: res }) => {
+    //   response.json(res);
+    // }).catch((err) => {
+    //   console.log(err);
+    //   response.json([]);
+    // });
+  });
+
   return router;
 };
