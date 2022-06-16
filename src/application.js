@@ -43,7 +43,7 @@ module.exports = function application(
   app.use("/api/meetinglinks", meetingLinksRoutes(db));
   app.use("/api", indexRoutes(db));
   app.use("/api/login", loginRoutes(db));
-  app.use("/api/update/workorder", updateworkorderRoutes(db));
+  app.use("/api/update/workorder", updateworkorderRoutes(db, actions.addWorkorder));
   // app.use("api/register", registerRoutes(db));
 
 
