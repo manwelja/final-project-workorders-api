@@ -20,11 +20,11 @@ wss.on("connection", socket => {
 
 function addWorkorder(keys) {
   wss.clients.forEach(function eachClient(client) {
-    console.log("do we have clients?")
-    if (client.readyState === WebSocket.OPEN) {
+      if (client.readyState === WebSocket.OPEN) {
       client.send(
         JSON.stringify({
-          keys
+          data: keys,
+          message: "workorder data updated"
         })
       );
     }
