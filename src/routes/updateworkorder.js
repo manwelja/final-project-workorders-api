@@ -17,7 +17,11 @@ module.exports = (db, updateWorkorder) => {
     db.query(
       query, [request.body.description, parseInt(request.body.rating), parseInt(request.params.id)]
     ).then(({ rows: res }) => {
-      response.json(res);
+      setTimeout(() => {
+        //call function to send updated workorder data to all connected clients, via websockets
+        response.status(204).json({});
+        updateWorkorder(request.body);
+      }, 1000);
     }).catch((err) => {
       console.log(err);
       response.json([]);
