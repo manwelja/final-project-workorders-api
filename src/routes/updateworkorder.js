@@ -28,7 +28,7 @@ module.exports = (db, updateWorkorder) => {
     });
   });
 
-  router.put("/:id", (request, response) => {
+  router.post("/:id", (request, response) => {
     let query = `UPDATE workorders SET user_mentor_id = $1, status_id = $2 WHERE id = $3`;
     console.log(request.body);
     db.query(

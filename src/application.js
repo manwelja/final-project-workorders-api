@@ -23,13 +23,10 @@ const meetingLinksRoutes = require("./routes/meetinglinks");
 const loginRoutes = require("./routes/login");
 // const registerRoutes = require("./routes/register");
 const updateworkorderRoutes = require("./routes/updateworkorder");
-const hangoutLinkRoutes = require("./routes/hangoutLink");
-
-
 
 module.exports = function application(
   ENV,
-  actions = { addWorkorder: () => {} }
+  actions = { messageClients: () => {} }
 ) {
   app.use(cors());
   app.use(helmet());
@@ -40,13 +37,12 @@ module.exports = function application(
   app.use("/api/usersbyrole", usersByRoleRoutes(db));
   app.use("/api/modules", modulesRoutes(db));
   app.use("/api/categories", categoriesRoutes(db));
-  app.use("/api/workorders", workOrdersRoutes(db, actions.addWorkorder));
+  app.use("/api/workorders", workOrdersRoutes(db, actions.messageClients));
   app.use("/api/queue", queueRoutes(db));
-  app.use("/api/meetinglinks", meetingLinksRoutes(db));
+  app.use("/api/meetinglinks", meetingLinksRoutes(db, actions.messageClients));
   app.use("/api", indexRoutes(db));
   app.use("/api/login", loginRoutes(db));
-  app.use("/api/hangoutlinks", hangoutLinkRoutes(db, actions.addWorkorder));
-  app.use("/api/update/workorder", updateworkorderRoutes(db, actions.addWorkorder));
+  app.use("/api/update/workorder", updateworkorderRoutes(db, actions.messageClients));
   // app.use("api/register", registerRoutes(db));
 
 

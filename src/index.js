@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("../environment");
 
-const app = require("./application")(ENV, { addWorkorder });
+const app = require("./application")(ENV, { messageClients });
 const server = require("http").Server(app);
 
 const WebSocket = require("ws");
@@ -18,7 +18,7 @@ wss.on("connection", socket => {
   };
 });
 
-function addWorkorder(keys) {
+function messageClients(keys) {
   wss.clients.forEach(function eachClient(client) {
       if (client.readyState === WebSocket.OPEN) {
       client.send(

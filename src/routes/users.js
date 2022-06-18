@@ -25,7 +25,7 @@ module.exports = (db) => {
     });
   });
 
-  router.put("/", (request, response) => {
+  router.post("/", (request, response) => {
     const fields = Object.keys(request.body).join(", ");
     const values = Object.values(request.body);
     const ref = values.map((_, idx) => "$" + (idx + 1)).join(", ");
