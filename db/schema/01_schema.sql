@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS meeting_links CASCADE;
+DROP TABLE IF EXISTS hangout_links CASCADE;
 DROP TABLE IF EXISTS cohorts CASCADE;
 DROP TABLE IF EXISTS statuses CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
@@ -65,8 +65,8 @@ CREATE TABLE workorders (
   date_closed TIMESTAMP
 );
 
-CREATE TABLE meeting_links (
+CREATE TABLE hangout_links (
   id SERIAL PRIMARY KEY NOT NULL,
   workorder_id INTEGER REFERENCES workorders(id) ON DELETE CASCADE,
-  meeting_link VARCHAR(255)
+  meeting_link VARCHAR(255) UNIQUE
 );

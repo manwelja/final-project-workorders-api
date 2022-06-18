@@ -23,6 +23,8 @@ const meetingLinksRoutes = require("./routes/meetinglinks");
 const loginRoutes = require("./routes/login");
 // const registerRoutes = require("./routes/register");
 const updateworkorderRoutes = require("./routes/updateworkorder");
+const hangoutLinkRoutes = require("./routes/hangoutLink");
+
 
 
 module.exports = function application(
@@ -43,6 +45,7 @@ module.exports = function application(
   app.use("/api/meetinglinks", meetingLinksRoutes(db));
   app.use("/api", indexRoutes(db));
   app.use("/api/login", loginRoutes(db));
+  app.use("/api/hangoutlinks", hangoutLinkRoutes(db, actions.addWorkorder));
   app.use("/api/update/workorder", updateworkorderRoutes(db, actions.addWorkorder));
   // app.use("api/register", registerRoutes(db));
 
