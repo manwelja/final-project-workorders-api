@@ -30,7 +30,6 @@ module.exports = (db, updateWorkorder) => {
 
   router.post("/:id", (request, response) => {
     let query = `UPDATE workorders SET user_mentor_id = $1, status_id = $2 WHERE id = $3`;
-    console.log(request.body);
     db.query(
       query, [parseInt(request.body.user_mentor_id), parseInt(request.body.status_id), parseInt(request.params.id)]
     ).then(({ rows: res }) => {
