@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db, updateWorkorder) => {
+
+  router.get("/", (request, response) => {
+    db.query(
+      `SELECT * FROM meeting_links `
+    ).then(({ rows: res }) => {
+      response.json(res);
+    }).catch((err) => {
+      console.log(err);
+      response.json([]);
+    });
+  });
+
   //Get a meeting link using the workorder ID
   router.get("/:id", (request, response) => {
     const workorderID = parseInt(request.params.id);

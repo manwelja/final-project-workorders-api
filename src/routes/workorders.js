@@ -46,7 +46,6 @@ module.exports = (db, updateWorkorder) => {
   //Get a list of workorders for the specified mentor or student ID
   router.get("/:role/:id", (request, response) => {
     let dbQuery = "";
-  
     if (request.params.role === "mentor") {
       dbQuery = `     
         SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic, statuses.description as status_description  
