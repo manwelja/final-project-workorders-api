@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db, updateWorkorder) => {
-  router.patch("/:fname/:id", (request, response) => {
+  router.post("/:fname/:id", (request, response) => {
     let query = "";
-
     if (request.params.fname === "studentfeedback") {
       query = `UPDATE workorders SET student_notes = $1, mentor_rating = $2 WHERE id = $3`;
     } else if (request.params.fname === "mentorfeedback") {
