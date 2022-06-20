@@ -15,7 +15,7 @@ The API, PostgreSQL database and the workorder application itself were all built
 ## Final Product - API Routes
 
 ### 1. API Routes
-!["API Routes"](https://github.com/manwelja/final-project-workorders-api/blob/master/docs/routes.png)
+!["API Routes"](https://github.com/manwelja/final-project-workorders-api/blob/main/docs/routes.png)
 
 
 ## Authors
