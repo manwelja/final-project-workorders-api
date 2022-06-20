@@ -11,7 +11,7 @@ const dbParams = require("./lib/db");
 const db = new Pool(dbParams);
 db.connect();
 
-// Separated Routes for each Resource
+// Declare seperate Routes for each Resource
 const usersRoutes = require("./routes/users");
 const usersByRoleRoutes = require("./routes/usersbyrole");
 const indexRoutes = require("./routes/index");
@@ -21,13 +21,13 @@ const workOrdersRoutes = require("./routes/workorders");
 const queueRoutes = require("./routes/queue");
 const meetingLinksRoutes = require("./routes/meetinglinks");
 const loginRoutes = require("./routes/login");
-// const registerRoutes = require("./routes/register");
 const updateworkorderRoutes = require("./routes/updateworkorder");
 
 module.exports = function application(
   ENV,
   actions = { messageClients: () => {} }
 ) {
+
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());
@@ -43,9 +43,7 @@ module.exports = function application(
   app.use("/api", indexRoutes(db));
   app.use("/api/login", loginRoutes(db));
   app.use("/api/update/workorder", updateworkorderRoutes(db, actions.messageClients));
-  // app.use("api/register", registerRoutes(db));
-
-
+  
   app.close = function() {
     return db.end();
   };

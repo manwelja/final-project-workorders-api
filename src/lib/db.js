@@ -1,3 +1,4 @@
+//Database connectivity environment variables
 require('dotenv').config();
 
 let dbParams = {};

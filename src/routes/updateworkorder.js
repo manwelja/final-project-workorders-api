@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+//These routes relate to data in the workorders table (update routed only)
 module.exports = (db, updateWorkorder) => {
+  //Update the specified workorder with student/mentor feedback data
+  //Input: role (student/mentor), workorder id
+  //Output - json object with query results
   router.post("/:fname/:id", (request, response) => {
     let query = "";
 
@@ -18,7 +22,7 @@ module.exports = (db, updateWorkorder) => {
       query, [request.body.description, parseInt(request.body.rating), parseInt(request.params.id)]
     ).then(({ rows: res }) => {
       setTimeout(() => {
-        //call function to send updated workorder data to all connected clients, via websockets
+      //call function to send notification of database update to all connected clients, via websockets
         response.status(204).json({});
         updateWorkorder(request.body);
       }, 1000);
@@ -28,15 +32,13 @@ module.exports = (db, updateWorkorder) => {
     });
   });
 
-
+  //Update the specified workorder with data when the workorder status changed
+  //Input: workorder id, data to update (via reqeust object)
+  //Output - json object with query results
   router.post("/:id", (request, response) => {
-    // const ref = Object.keys(request.body).map((val, idx) => val + "=" + "$" + (idx + 1))
-    // const assignVals = ref.join(", ");
-    // const workorderIdx = "$" + String(ref.length + 1);
-    // let query = `UPDATE workorders SET ${assignVals} WHERE id = ${workorderIdx}`;
     let query =  `UPDATE workorders SET user_mentor_id = $1, status_id = $2`;
     const values = [parseInt(request.body.user_mentor_id), parseInt(request.body.status_id)];
-   
+   //build the query statement conditionally based on the input
     if (request.body.date_pickup) {
       query += ", date_pickup = $3";
       values.push(request.body.date_pickup);
@@ -51,7 +53,7 @@ module.exports = (db, updateWorkorder) => {
       query, [...values]
     ).then(({ rows: res }) => {
       setTimeout(() => {
-      //call function to send updated workorder data to all connected clients, via websockets
+      //call function to send notification of database update to all connected clients, via websockets
         response.status(204).json({});
         updateWorkorder(request.body);
       }, 1000);

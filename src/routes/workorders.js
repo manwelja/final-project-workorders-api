@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+//These routes relate to data in the workorders table
 module.exports = (db, updateWorkorder) => {
+  //Get all workorders in the database 
+  //Input: N/A
+  //Output - json object with query results
   router.get("/", (request, response) => {
+    //The query statement is formatted to retrieve all of the data needed for display in the workorder view
     db.query(
       `     
         SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic, statuses.description as status_description  
@@ -22,8 +27,11 @@ module.exports = (db, updateWorkorder) => {
     });
   });
 
-  //Get a workorder by its unique ID
+  //Get a workorder from the database with the specified id
+  //Input: workorder id
+  //Output - json object with query results
   router.get("/:id", (request, response) => {
+    //The query statement is formatted to retrieve all of the data needed for display in the workorder view
     db.query(
       `      
         SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic, statuses.description as status_description 
@@ -43,9 +51,12 @@ module.exports = (db, updateWorkorder) => {
     });
   });
 
-  //Get a list of workorders for the specified mentor or student ID
+  //Get all workorders from the database for the specified role
+  //Input: workorder id
+  //Output - json object with query results
   router.get("/:role/:id", (request, response) => {
     let dbQuery = "";
+    //Build the select statement conditionally depending on user role
     if (request.params.role === "mentor") {
       dbQuery = `     
         SELECT workorders.*, user_info.first_name as student_first_name, user_info.last_name as student_last_name, mentor_info.first_name as mentor_first_name, mentor_info.last_name as mentor_last_name, categories.description as category, modules.week, modules.day, modules.topic, statuses.description as status_description  
@@ -79,7 +90,11 @@ module.exports = (db, updateWorkorder) => {
     });
   });
 
+  //Add a new workorder to the database
+  //Input: new workorder data (via reqeust object)
+  //Output - json object with query results
   router.post("/", (request, response) => {
+    //Split the key value pairs to format the data for query string (prevent database injection)
     const fields = Object.keys(request.body).join(", ");
     const values = Object.values(request.body);
     const ref = values.map((_, idx) => "$" + (idx + 1)).join(", ");
@@ -87,7 +102,7 @@ module.exports = (db, updateWorkorder) => {
       `INSERT INTO workorders (${fields}) VALUES (${ref})`, values
     ).then(({ rows: res }) => {
       setTimeout(() => {
-        //call function to send updated workorder data to all connected clients, via websockets
+      //call function to send notification of database update to all connected clients, via websockets
         response.status(204).json({});
         updateWorkorder(request.body);
       }, 1000);
