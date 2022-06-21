@@ -22,7 +22,7 @@ CREATE TABLE categories (
 CREATE TABLE statuses (
   id SERIAL PRIMARY KEY NOT NULL,
   description VARCHAR(128) NOT NULL
-);
+);handle
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
