@@ -29,7 +29,6 @@ CREATE TABLE users (
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  cohort_id INTEGER REFERENCES cohorts(id) ON DELETE CASCADE,
   handle VARCHAR(255) NOT NULL,
   avatar VARCHAR(255) NOT NULL,
   role char(50),
