@@ -4,6 +4,6 @@ VALUES
 ('Jane', 'Doe', 'janedoe@gmail.com', 'jndoe', '', 'student', true, 'password', '2021-04-06'),
 ('Anne', 'Smith', 'smitty@yahoo.com', 'asmith', '', 'mentor', true, 'password', '2021-06-25'),
 ('Patricia', 'Anderson', 'pattya@hotmail.com', 'panderson', '', 'mentor', true, 'password', '2021-10-28'),
-('Emma', 'Grannnis', 'emma@gmail.com', 'egrannis', '', 'mentor', true, 'password', '2022-01-01');
+('Emma', 'Grannis', 'emma@gmail.com', 'egrannis', '', 'mentor', true, 'password', '2022-01-01');
 
   
