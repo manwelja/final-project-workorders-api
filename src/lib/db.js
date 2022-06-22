@@ -12,9 +12,9 @@ if (process.env.DATABASE_URL) {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
   //  ssl: true
-  //  ssl: {
-  //    rejectUnauthorized: false,
-  //  }
+    ssl: {
+      rejectUnauthorized: false,
+    }
   };
 }
 module.exports = dbParams;
