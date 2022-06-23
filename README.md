@@ -30,7 +30,7 @@ The API, PostgreSQL database and the workorder application itself were all built
   2. Clone your repository onto your local device.
   3. Install dependencies using the npm install command.
   4. Seed database using npm run db:reset command
-  5. Start the web server using the npm run local command. The app will be served at http://localhost:8001/.
+  5. Start the web server using the npm start local command. The app will be served at http://localhost:8001/.
   6. Go to http://localhost:8001/api in your browser.
 
 
